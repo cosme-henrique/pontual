@@ -60,6 +60,18 @@ Padrão:
 - `page.tsx` lê `searchParams` como prop (server-side)
 - Client Component usa `useSearchParams` + `router.replace` para atualizar a URL
 
+## Git — branches
+
+Toda feature nova nasce de uma branch própria, criada a partir da `dev` (nunca direto da `main`).
+
+Padrão de nome: `feat/nome_da_feature`
+
+```
+git checkout dev
+git pull origin dev
+git checkout -b feat/nome_da_feature
+```
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
