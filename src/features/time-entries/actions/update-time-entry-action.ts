@@ -4,8 +4,9 @@ import { revalidatePath } from "next/cache";
 import { createTimeEntrySchema } from "../schemas/create-time-entry-schema";
 import { updateTimeEntry } from "../use-cases/update-time-entry";
 import { makeTimeEntryRepository } from "../repositories/make-time-entry-repository";
+import type { TimeEntry } from "../types";
 
-type ActionResult = { success: true } | { success: false; error: string };
+type ActionResult = { success: true; entry: TimeEntry } | { success: false; error: string };
 
 export async function updateTimeEntryAction(
   id: string,
@@ -24,9 +25,9 @@ export async function updateTimeEntryAction(
   }
 
   const repository = makeTimeEntryRepository();
-  await updateTimeEntry(repository, id, parsed.data);
+  const entry = await updateTimeEntry(repository, id, parsed.data);
 
   revalidatePath("/dashboard");
   revalidatePath("/lancamentos");
-  return { success: true };
+  return { success: true, entry };
 }

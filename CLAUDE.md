@@ -72,6 +72,12 @@ git pull origin dev
 git checkout -b feat/nome_da_feature
 ```
 
+## Testes de interface visual
+
+Não rodar a aplicação nem dirigir testes visuais/de browser (não usar a skill `run`, Playwright, `chromium-cli` etc.). O usuário mesmo roda a aplicação e valida a interface visualmente.
+
+Type checking e lint são suficientes para validar corretude de código antes de reportar a tarefa como concluída.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

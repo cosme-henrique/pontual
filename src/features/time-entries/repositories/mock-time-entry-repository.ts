@@ -68,6 +68,10 @@ export class MockTimeEntryRepository implements ITimeEntryRepository {
     return MOCK.filter((entry) => entry.date !== null && entry.date.startsWith(month));
   }
 
+  async findById(id: string) {
+    return MOCK.find((entry) => entry.id === id) ?? null;
+  }
+
   async getProjects() {
     return Object.values(PROJECTS);
   }

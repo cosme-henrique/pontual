@@ -27,7 +27,7 @@ type TimeEntryFormProps = {
   projects: Project[];
   entry?: TimeEntry;
   initialValues?: TimeEntryInitialValues;
-  onSuccess: () => void;
+  onSuccess: (entry: TimeEntry) => void;
   onCancel: () => void;
 };
 
@@ -112,7 +112,7 @@ export function TimeEntryForm({ projects, entry, initialValues, onSuccess, onCan
       return;
     }
 
-    onSuccess();
+    onSuccess(result.entry);
   }
 
   return (
