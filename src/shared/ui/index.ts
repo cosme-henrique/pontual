@@ -40,3 +40,5 @@ export type { MultiSelectOption, MultiSelectProps } from "./multi-select";
 export { Dialog, useDialog } from "./dialog";
 
 export { Sidebar } from "./sidebar";
+
+export { Tabs } from "./tabs";

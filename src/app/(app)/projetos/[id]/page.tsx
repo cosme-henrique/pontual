@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { Separator } from "@/shared/ui";
+import { Separator, Tabs } from "@/shared/ui";
 import { makeProjectRepository } from "@/features/projects/repositories/make-project-repository";
 import { getProjectById } from "@/features/projects/use-cases/get-project-by-id";
 import { ProjectDetailStats } from "@/features/projects/components/project-detail-stats";
@@ -10,6 +10,7 @@ import { TableSkeleton } from "@/features/dashboard/components/table-skeleton";
 import { makeMonthFilterRepository } from "@/features/month-filter/repositories/make-month-filter-repository";
 import { getSelectedMonth } from "@/features/month-filter/use-cases/get-selected-month";
 import { parseTimeEntryListFilters, type TimeEntrySearchParams } from "@/features/time-entries/schemas/time-entry-filters-schema";
+import { ProjectNotesPanel } from "@/features/notes/components/project-notes-panel";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -42,13 +43,22 @@ export default async function ProjectDetailPage({ params, searchParams }: PagePr
 
       <Separator />
 
-      <div className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold text-zinc-700">Lançamentos do projeto</h2>
+      <Tabs.Root defaultValue="lancamentos">
+        <Tabs.List>
+          <Tabs.Trigger value="lancamentos">Lançamentos</Tabs.Trigger>
+          <Tabs.Trigger value="anotacoes">Anotações</Tabs.Trigger>
+        </Tabs.List>
 
-        <Suspense fallback={<TableSkeleton />}>
-          <DashboardTable search={search} page={currentPage} month={month} projectId={id} status={statusFilter} />
-        </Suspense>
-      </div>
+        <Tabs.Content value="lancamentos" className="flex flex-col gap-4">
+          <Suspense fallback={<TableSkeleton />}>
+            <DashboardTable search={search} page={currentPage} month={month} projectId={id} status={statusFilter} />
+          </Suspense>
+        </Tabs.Content>
+
+        <Tabs.Content value="anotacoes">
+          <ProjectNotesPanel projectId={id} />
+        </Tabs.Content>
+      </Tabs.Root>
     </main>
   );
 }

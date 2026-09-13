@@ -12,6 +12,8 @@ export interface ITimeEntryRepository {
 
   findByMonth(month: string): Promise<TimeEntry[]>;
 
+  findById(id: string): Promise<TimeEntry | null>;
+
   getProjects(): Promise<Project[]>;
 
   create(input: {

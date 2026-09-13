@@ -4,9 +4,10 @@ import { revalidatePath } from "next/cache";
 import { createTimeEntrySchema } from "../schemas/create-time-entry-schema";
 import { createTimeEntry } from "../use-cases/create-time-entry";
 import { makeTimeEntryRepository } from "../repositories/make-time-entry-repository";
+import type { TimeEntry } from "../types";
 
 type ActionResult =
-  | { success: true }
+  | { success: true; entry: TimeEntry }
   | { success: false; error: string };
 
 export async function createTimeEntryAction(
@@ -25,8 +26,8 @@ export async function createTimeEntryAction(
   }
 
   const repository = makeTimeEntryRepository();
-  await createTimeEntry(repository, parsed.data);
+  const entry = await createTimeEntry(repository, parsed.data);
 
   revalidatePath("/dashboard");
-  return { success: true };
+  return { success: true, entry };
 }

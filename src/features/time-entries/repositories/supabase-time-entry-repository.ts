@@ -124,6 +124,18 @@ export class SupabaseTimeEntryRepository implements ITimeEntryRepository {
     return (data as TimeEntryRow[]).map(toTimeEntry);
   }
 
+  async findById(id: string): Promise<TimeEntry | null> {
+    const { data, error } = await supabase
+      .from("time_entries")
+      .select("*, projects(id, name, client_name)")
+      .eq("id", id)
+      .single();
+
+    if (error) return null;
+
+    return toTimeEntry(data as TimeEntryRow);
+  }
+
   async getProjects(): Promise<Project[]> {
     const { data, error } = await supabase
       .from("projects")
